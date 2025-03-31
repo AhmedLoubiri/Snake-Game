@@ -49,12 +49,24 @@ def nextTurn(snake, food):
     
     snake.squares.insert(0, square)
     
-    del snake.coordinates[-1] # last set of coordinates
-    
-    canvas.delete(snake.squares[-1]) # delete last square
-    
-    del snake.squares[-1] # delete last square from list
+    if x == food.coordinates[0] and y == food.coordinates[1]:
+        global score
         
+        score += 1
+        
+        label.config(text = f"Score:{score}")
+        
+        canvas.delete("food") # we can use "food" because we have given it a tag
+        
+        food = Food() # create new food
+    else:
+        del snake.coordinates[-1] # last set of coordinates
+    
+        canvas.delete(snake.squares[-1]) # delete last square
+    
+        del snake.squares[-1] # delete last square from list
+        
+            
     window.after(SPEED, nextTurn, snake, food)
 
 def changeDirection(newDirection):
