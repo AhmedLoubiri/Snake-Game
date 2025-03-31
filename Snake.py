@@ -104,7 +104,10 @@ def checkCollisions(snake):
     return False
 
 def gameOver():
-    pass
+    canvas.delete(ALL)
+    canvas.create_text(canvas.winfo_width()/2, canvas.winfo_height()/2,
+                       font = ('consolas', 70), text = "Game Over", fill = "red", tag = "gameover")
+    
 
 window = Tk()
 window.title("Snake Game")  
