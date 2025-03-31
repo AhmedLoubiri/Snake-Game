@@ -66,8 +66,11 @@ def nextTurn(snake, food):
     
         del snake.squares[-1] # delete last square from list
         
-            
-    window.after(SPEED, nextTurn, snake, food)
+    if checkCollisions(snake):
+        gameOver()
+        
+    else:
+        window.after(SPEED, nextTurn, snake, food)
 
 def changeDirection(newDirection):
     global direction
@@ -86,8 +89,19 @@ def changeDirection(newDirection):
             direction = newDirection
     
 
-def checkCollisions():
-    pass
+def checkCollisions(snake):
+    x, y = snake.coordinates[0]
+    
+    if x < 0 or x >= GAME_WIDTH:
+        return True
+    elif y < 0 or y >= GAME_HEIGHT:
+        return True
+    
+    for bodyPart in snake.coordinates[1:]:
+        if x == bodyPart[0] and y == bodyPart[1]:
+            return True
+        
+    return False
 
 def gameOver():
     pass
