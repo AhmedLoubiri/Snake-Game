@@ -31,8 +31,31 @@ class Food:
         canvas.create_oval(x, y, x+SPACE_SIZE, y+SPACE_SIZE, fill = FOOD_COLOR, tag = "food")    
 
 
-def nextTurn():
-    pass
+def nextTurn(snake, food):
+    x, y = snake.coordinates[0]
+    
+    if direction == "up":
+        y -= SPACE_SIZE
+    elif direction == "down":
+        y += SPACE_SIZE
+    elif direction == "left":
+        x -= SPACE_SIZE
+    elif direction == "right":
+        x += SPACE_SIZE
+        
+    snake.coordinates.insert(0, (x, y))
+    
+    square = canvas.create_rectangle(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = SNAKE_COLOR)
+    
+    snake.squares.insert(0, square)
+    
+    del snake.coordinates[-1] # last set of coordinates
+    
+    canvas.delete(snake.squares[-1]) # delete last square
+    
+    del snake.squares[-1] # delete last square from list
+        
+    window.after(SPEED, nextTurn, snake, food)
 
 def changeDirection(newDirection):
     pass
@@ -71,5 +94,7 @@ window.geometry(f"{window_width}x{window_height}+{x}+{y}")
 
 snake = Snake()
 food = Food()
+
+nextTurn(snake, food)
 
 window.mainloop()
